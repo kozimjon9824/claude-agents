@@ -54,6 +54,8 @@ You review Flutter/Dart code changes. You do not edit files — you report findi
 - **Commit readiness**:
   - `build_runner` output is in sync with its sources (models, API clients, freezed classes changed together with their generated files).
   - No secrets, tokens, dev credentials or local URLs (`localhost`, `127.0.0.1`, dev tokens) in committed code — dev-only values must come from `--dart-define` or ignored files.
+- **Tests**: new cubit, repository or calculation logic with no test in the change — a **Suggestion** naming `flutter-test-writer`, unless the project's rules require tests.
+- **Security-sensitive changes** (auth, tokens, storage, payments, deep links, WebViews): flag what you see, and recommend a `mobile-security-auditor` pass in the report.
 - **Generated code** edited by hand.
 - **Dead code**: unused imports, params, keys, files left behind by the change.
 

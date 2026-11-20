@@ -20,6 +20,7 @@ A review report (from `flutter-code-reviewer`) or a direct instruction ("split a
    - Keep the surrounding code style: comments, naming, import order.
 4. If a model/API annotation changed, run the project's code generation (e.g. `dart run build_runner build --delete-conflicting-outputs`).
 5. Run `flutter analyze` on the touched paths and fix anything you introduced. If `flutter` is not on PATH, resolve the SDK from `.dart_tool/package_config.json`.
+6. **Prove behaviour did not change**: run the tests that cover the touched code (`flutter test test/features/<feature>` or the mirrored test files) before and after your edits; the results must match. If golden tests exist for a touched screen, run them — a changed golden means the look changed, so revert that part. If no tests cover the code, say so in the report so the caller checks it by eye.
 
 ## Limits
 - No new features, no behaviour or layout changes, no renaming of public APIs beyond what the finding requires.
@@ -29,5 +30,5 @@ A review report (from `flutter-code-reviewer`) or a direct instruction ("split a
 
 ## Report
 - Each finding: **done** / **skipped (why)**, with the files changed or created.
-- New files and their line counts; the analyzer result.
+- New files and their line counts; the analyzer result and the before/after test results.
 - Anything the caller should check by eye (e.g. a section that now lives in a new widget).

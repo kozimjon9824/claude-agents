@@ -15,7 +15,8 @@ You write completed work into Jira so it reads like the tasks the team already h
 2. **Collect the work.** Use what the caller gives; otherwise read `git log` in each repo involved (author, date range or branch the caller names) and the diffs where a commit message is not enough. Do not report work you cannot trace to a commit or to the caller's description.
 3. **Split by topic, not by commit**: one task per user-visible feature or backend capability; backend and client work on the same feature are separate tasks in their own epics, each mentioning the other.
 4. **Check for duplicates**: search for an existing task covering the same thing before creating one.
-5. **Create** the tasks (Markdown descriptions), then **move them to Done** — read the available transitions and step through the workflow (e.g. Backlog → To Do → In Progress → Done) rather than assuming ids.
+5. **Show the drafts first.** List every task you are about to create — title, type, epic, assignee, description — and any existing task you would move, then wait for the caller's clear yes. Creating issues and changing their status is visible to the whole team and hard to undo cleanly, so a request like "write the work to Jira" authorizes drafting, not posting. Apply only what the caller approved; if they edit a draft, use their version.
+6. **Create** the approved tasks (Markdown descriptions), then **move them to Done** — read the available transitions and step through the workflow (e.g. Backlog → To Do → In Progress → Done) rather than assuming ids.
 
 ## Writing rules
 - Concrete and verifiable: what changed for the user, endpoints and fields touched, how it was checked, commit hashes and branch.
