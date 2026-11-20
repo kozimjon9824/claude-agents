@@ -1,6 +1,6 @@
 ---
 name: dependency-upgrader
-description: Upgrades Flutter/Dart packages safely in small tested batches — reads `flutter pub outdated`, groups packages that must move together (bloc + flutter_bloc + bloc_test, freezed + freezed_annotation, json_serializable + json_annotation, retrofit + retrofit_generator + dio, Firebase), reads each changelog for breaking changes, migrates the code, regenerates, and runs analyze and tests after every batch. Use for "update packages", "upgrade dio/freezed/bloc", "fix version solving".
+description: Upgrades Flutter/Dart packages safely in small tested batches — reads `flutter pub outdated`, groups packages that must move together (bloc + flutter_bloc + bloc_test, freezed + freezed_annotation, json_serializable + json_annotation, retrofit + retrofit_generator + dio, Firebase), reads each changelog for breaking changes, migrates the code, regenerates, and runs analyze and tests after every batch. Use for "update packages", "upgrade dio/freezed/bloc", "fix version solving". Also "paketlarni yangila", "dependency'larni yangila".
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: sonnet
 ---

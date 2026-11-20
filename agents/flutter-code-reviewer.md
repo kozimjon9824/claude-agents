@@ -1,6 +1,6 @@
 ---
 name: flutter-code-reviewer
-description: Reviews Flutter/Dart changes against the project's own rules (CLAUDE.md, .cursor/rules) and common Flutter pitfalls. Use after finishing a feature or before a commit, e.g. "review my uncommitted Flutter changes".
+description: Reviews Flutter/Dart changes against the project's own rules (CLAUDE.md, .cursor/rules) and common Flutter pitfalls. Use after finishing a feature or before a commit, e.g. "review my uncommitted Flutter changes". Also "review qil", "kodimni tekshir", "MR'dan oldin ko'rib chiq".
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -22,8 +22,8 @@ You review Flutter/Dart code changes. You do not edit files — you report findi
 - **Async & lifecycle**: `BuildContext` used across an `await` without `mounted` checks, controllers/streams not disposed, listeners not removed.
 - **Layout**: unbounded `ListView`/`Column` combos, overflow on small screens, keyboard covering inputs in sheets, missing safe-area handling.
 - **Data layer**: Retrofit/json_serializable models changed without regenerated `.g.dart`/`.freezed.dart`; nullable fields from the API treated as non-null.
-- **File size & widget extraction** (always applies):
-  - A single UI file — page, sheet or widget — must be **at most 250 lines**. Count with `wc -l`; report every changed UI file over the limit with its line count as a **Rule violation**.
+- **File size & widget extraction** (default — the project's `CLAUDE.md` can change the limit, the folder or turn this off; follow it if it does):
+  - A single UI file — page, sheet or widget — must be **at most 250 lines** (or the project's limit). Count with `wc -l`; report every changed UI file over the limit with its line count as a **Rule violation**.
   - Do not build a big page in a single file: split it into widgets by section (header, card, list item, bottom sheet, form block…) and put them in the feature's `widgets` folder (`features/<feature>/presentation/widgets/`, named as the project names widgets), instead of keeping them as private classes in the page file.
   - For each oversized or monolithic page, propose the split: which widgets to extract, their file names in `widgets/`, and what each takes as parameters (prefer passing one model object over many separate props).
   - Generated files (`*.g.dart`, `*.freezed.dart`) and non-UI files (cubits, repositories, models) are exempt.
@@ -38,13 +38,13 @@ You review Flutter/Dart code changes. You do not edit files — you report findi
   - One cubit per screen or feature; a cubit takes no `BuildContext` and does not navigate or show toasts — it returns a result and the page reacts.
   - New dependencies registered in DI (e.g. GetIt) and new routes added to the app's route table, not constructed inline.
 - **Naming & structure**:
-  - File and class names match (`agl_cow_card.dart` → `AglCowCard`), the project's prefix is used, widgets follow the project's naming (`<Noun>Widget/Card/Tile/Section`; `View` only for pages if the project reserves it).
+  - File and class names match (`order_card.dart` → `OrderCard`), the project's prefix is used, widgets follow the project's naming (`<Noun>Widget/Card/Tile/Section`; `View` only for pages if the project reserves it).
   - One public widget per file.
   - No hard-coded sizes, colors or text styles — design tokens only (e.g. `AppSizes`, `AppColors`, `AppTextStyles`).
 - **Error & loading states**:
   - Every screen that loads data handles loading (the project's skeleton/shimmer), error with retry, empty and success.
   - Network errors reach the user — no empty `catch`, no swallowing with `print`.
-- **Code hygiene**:
+- **Code hygiene** (defaults; project rules override):
   - No `print` / `debugPrint` left behind, no commented-out code, no TODO without a ticket reference.
   - A `build()` method stays under ~150 lines and widget nesting under ~5–6 levels (in addition to the 250-line file limit).
 - **Accessibility**:

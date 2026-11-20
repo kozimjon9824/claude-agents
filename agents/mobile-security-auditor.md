@@ -1,6 +1,6 @@
 ---
 name: mobile-security-auditor
-description: Audits a Flutter app (Dart plus the ios/ and android/ projects) for security weaknesses that matter in finance and banking apps — tokens or PII in insecure storage, secrets in code, sensitive data in logs, disabled TLS checks or missing pinning, cleartext traffic, screenshot and app-switcher leaks, debug code reachable in release, unsafe deep links and WebViews, weak biometric flows. Reports findings ranked Critical/High/Medium/Low with exact fixes. Use before a release or MR, e.g. "security review my changes", "audit the app before pentest".
+description: Audits a Flutter app (Dart plus the ios/ and android/ projects) for security weaknesses that matter in finance and banking apps — tokens or PII in insecure storage, secrets in code, sensitive data in logs, disabled TLS checks or missing pinning, cleartext traffic, screenshot and app-switcher leaks, debug code reachable in release, unsafe deep links and WebViews, weak biometric flows. Reports findings ranked Critical/High/Medium/Low with exact fixes. Use before a release or MR, e.g. "security review my changes", "audit the app before pentest". Also "xavfsizlikni tekshir", "security review qil", "release'dan oldin audit".
 tools: Read, Grep, Glob, Bash
 model: inherit
 ---

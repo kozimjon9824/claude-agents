@@ -2,7 +2,9 @@
 
 Thirteen [Claude Code subagents](https://code.claude.com/docs/en/sub-agents) that speed up day-to-day Flutter work: wiring APIs, matching Figma, reviewing, refactoring, testing (including golden and Patrol E2E tests), debugging crashes, translations, security, dependency upgrades, release notes and Jira — plus a `feature-pipeline` skill that chains them.
 
-Each agent reads the rules of the project it runs in (`CLAUDE.md`, `.cursor/rules`), so they work in any Flutter project.
+Each agent reads the rules of the project it runs in (`CLAUDE.md`, `.cursor/rules`), so they work in any Flutter project. Start from [`templates/CLAUDE.md`](templates/CLAUDE.md): the more of it you fill in (commands, environments, test data, code rules), the less the agents guess or ask.
+
+Agents work against dev/staging only, never production; anything that writes data, posts to Jira or pushes code waits for your confirmation.
 
 | Agent | What it does | Edits files? |
 |---|---|---|
@@ -60,7 +62,7 @@ Ask in plain words, e.g.:
 
 - "review my changes with flutter-code-reviewer", then "apply it with flutter-refactorer"
 - "compare Figma frame 5351:1710 with the screen using figma-matcher"
-- "write tests for the milk period cubit with flutter-test-writer"
+- "write tests for the orders cubit with flutter-test-writer"
 - "audit translations with l10n-auditor"
 - "security review my changes with mobile-security-auditor"
 - "implement ABC-123 end to end" (uses the `feature-pipeline` skill)

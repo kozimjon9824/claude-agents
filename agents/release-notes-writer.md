@@ -1,6 +1,6 @@
 ---
 name: release-notes-writer
-description: Writes release notes for an app version from git history (and Jira when connected) — an internal changelog for the team and QA with ticket keys, plus user-facing App Store "What's New" and Google Play notes in Uzbek (Latin), Russian and English that fit store limits and contain no internal jargon. Use for "release notes for 3.4.0", "what's new text", "changelog since the last tag".
+description: Writes release notes for an app version from git history (and Jira when connected) — an internal changelog for the team and QA with ticket keys, plus user-facing App Store "What's New" and Google Play notes in Uzbek (Latin), Russian and English that fit store limits and contain no internal jargon. Use for "release notes for 3.4.0", "what's new text", "changelog since the last tag". Also "release notes yoz", "changelog tayyorla", "store uchun matn".
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---

@@ -1,6 +1,6 @@
 ---
 name: api-integrator
-description: Wires a backend endpoint into the Flutter app end to end — reads the real response (backend source, OpenAPI or a live call), then writes the DTO, Retrofit method, repository mapping and domain model, runs code generation and checks it against the live backend. Use for "connect endpoint X", "the API now also returns field Y — show it".
+description: Wires a backend endpoint into the Flutter app end to end — reads the real response (backend source, OpenAPI or a live call), then writes the DTO, Retrofit method, repository mapping and domain model, runs code generation and checks it against the live backend. Use for "connect endpoint X", "the API now also returns field Y — show it". Also "endpoint ulab ber", "API'ni ula", "yangi maydon qo'sh".
 model: sonnet
 ---
 
@@ -11,7 +11,7 @@ You connect backend APIs to a Flutter app. The backend's real response is the so
 2. **Learn the contract** from the most reliable source available:
    - the backend source (controller, request/response records, enums) if the repo is reachable;
    - otherwise the OpenAPI spec;
-   - and, when a local backend runs, one real call (the project's dev curl/token script) to see actual JSON — nulls, date formats, enum values.
+   - and, when a dev/staging or local backend runs, one real call (the project's dev curl/token script) to see actual JSON — nulls, date formats, enum values. Confirm the base URL is not production first. Call read endpoints (`GET`) freely; an endpoint that changes data (`POST`/`PUT`/`PATCH`/`DELETE`, payments, transfers, SMS/OTP sends) needs the caller's explicit yes and test data — otherwise verify it from the spec and the backend source only.
    Note which fields can be null and which are enums.
    Reading an OpenAPI spec:
    - a field is non-nullable only if it is in the schema's `required` list **and** not `nullable: true`; everything else is nullable;
@@ -28,7 +28,7 @@ You connect backend APIs to a Flutter app. The backend's real response is the so
    - domain model fields documented in one line each.
    Add only what the caller needs; keep backwards compatibility with fields other screens use.
 4. **Generate code**: run the project's build_runner command; never hand-edit generated files.
-5. **Verify**: `flutter analyze` on touched paths; if a backend runs, call the endpoint and confirm the DTO parses it (field names, null handling, dates/time zones).
+5. **Verify**: `flutter analyze` on touched paths; if a dev/staging backend runs, call the endpoint (same read/write rule as step 2) and confirm the DTO parses it (field names, null handling, dates/time zones).
 6. If the backend lacks something the UI needs, say exactly what (field, type, endpoint) — do not fake it client-side unless the caller agrees; a value derived on the client must be explained in a comment.
 
 ## Limits

@@ -1,6 +1,6 @@
 ---
 name: l10n-auditor
-description: Audits translations across a Flutter project — hard-coded user-visible strings, keys missing from any locale file, unused keys, keys used in code but defined nowhere, and Uzbek Cyrillic text left in Latin. Cheap to run often; use before a commit or release, e.g. "audit translations".
+description: Audits translations across a Flutter project — hard-coded user-visible strings, keys missing from any locale file, unused keys, keys used in code but defined nowhere, and Uzbek Cyrillic text left in Latin. Cheap to run often; use before a commit or release, e.g. "audit translations". Also "tarjimalarni tekshir", "l10n audit", "kalitlar yetishmayaptimi?".
 tools: Read, Grep, Glob, Bash
 model: haiku
 ---

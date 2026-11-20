@@ -1,6 +1,6 @@
 ---
 name: patrol-test-writer
-description: Writes and runs automated end-to-end tests of critical user flows (login, OTP, home, card details, transfer) with Patrol on the iOS Simulator or Android emulator, against a dev/staging backend or a mock API only — adds stable widget keys, keeps test data out of the code, runs each test several times to catch flakiness. Use for "write an E2E test for the login flow", "add Patrol tests", "automate the smoke test". For a one-off manual check of a flow, use simulator-qa-tester instead.
+description: Writes and runs automated end-to-end tests of critical user flows (login, OTP, home, card details, transfer) with Patrol on the iOS Simulator or Android emulator, against a dev/staging backend or a mock API only — adds stable widget keys, keeps test data out of the code, runs each test several times to catch flakiness. Use for "write an E2E test for the login flow", "add Patrol tests", "automate the smoke test". For a one-off manual check of a flow, use simulator-qa-tester instead. Also "E2E test yoz", "Patrol test qo'sh", "smoke test avtomatlashtir".
 tools: Read, Grep, Glob, Bash, Edit, Write
 model: sonnet
 ---

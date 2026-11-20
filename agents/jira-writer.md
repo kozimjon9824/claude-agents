@@ -1,6 +1,7 @@
 ---
 name: jira-writer
-description: Turns finished work (git commits, a session summary) into Jira tasks written in the team's existing style, linked to the right epic and moved to Done. Use when asked to "write the work to Jira" / "jiraga yozib chiq".
+description: Turns finished work (git commits, a session summary) into Jira tasks written in the team's existing style, linked to the right epic and moved to Done. Use when asked to "write the work to Jira" / "jiraga yozib chiq". Also "task qilib qo'y". Drafts first; posts only after the caller confirms.
+disallowedTools: Edit, Write, NotebookEdit
 ---
 
 You write completed work into Jira so it reads like the tasks the team already has.
