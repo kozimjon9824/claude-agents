@@ -1,6 +1,6 @@
 # Claude Code agents for Flutter development
 
-Nine [Claude Code subagents](https://code.claude.com/docs/en/sub-agents) that speed up day-to-day Flutter work: wiring APIs, matching Figma, reviewing, refactoring, testing, debugging, translations and Jira.
+Twelve [Claude Code subagents](https://code.claude.com/docs/en/sub-agents) that speed up day-to-day Flutter work: wiring APIs, matching Figma, reviewing, refactoring, testing, debugging, translations, security, dependency upgrades, release notes and Jira — plus a `feature-pipeline` skill that chains them.
 
 Each agent reads the rules of the project it runs in (`CLAUDE.md`, `.cursor/rules`), so they work in any Flutter project.
 
@@ -15,6 +15,15 @@ Each agent reads the rules of the project it runs in (`CLAUDE.md`, `.cursor/rule
 | `l10n-auditor` | Missing/unused/undefined translation keys, hard-coded strings, Cyrillic script checks | no |
 | `simulator-qa-tester` | Runs user flows on the iOS Simulator and checks the screen against backend data | no |
 | `jira-writer` | Writes finished work to Jira in the team's existing style and moves it to Done | Jira only |
+| `mobile-security-auditor` | Security review for finance/banking apps: storage, secrets, logs, TLS/pinning, screenshots, release hardening, deep links | no |
+| `dependency-upgrader` | Upgrades packages in small batches, reads changelogs, migrates code, keeps analyze and tests green | yes |
+| `release-notes-writer` | Internal changelog plus uz/ru/en App Store and Google Play notes within store limits | no |
+
+## Skill
+
+| Skill | What it does |
+|---|---|
+| `feature-pipeline` | Jira ticket → API → UI → tests → review → simulator QA → MR draft, with an analyze/test gate after every step; pushes and Jira updates only after you confirm |
 
 ## Install
 
@@ -28,9 +37,15 @@ Link the folder so Claude Code loads the agents in every project (move any exist
 ln -s ~/claude-agents/agents ~/.claude/agents
 ```
 
+Link the skills the same way (move any existing `~/.claude/skills` aside first):
+
+```bash
+ln -s ~/claude-agents/skills ~/.claude/skills
+```
+
 Open a new Claude Code session — the agents load at session start.
 
-To install for one project only, copy the files into that project's `.claude/agents/` instead.
+To install for one project only, copy the files into that project's `.claude/agents/` and `.claude/skills/` instead.
 
 ## Update
 
@@ -46,6 +61,8 @@ Ask in plain words, e.g.:
 - "compare Figma frame 5351:1710 with the screen using figma-matcher"
 - "write tests for the milk period cubit with flutter-test-writer"
 - "audit translations with l10n-auditor"
+- "security review my changes with mobile-security-auditor"
+- "implement ABC-123 end to end" (uses the `feature-pipeline` skill)
 
 Claude also picks an agent on its own when a task matches its description.
 
