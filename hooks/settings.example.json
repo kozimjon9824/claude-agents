@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|WebFetch",
+        "hooks": [
+          { "type": "command", "command": "\"$HOME/claude-agents/hooks/guard-bash.sh\"", "timeout": 10 }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "\"$HOME/claude-agents/hooks/dart-format-analyze.sh\"", "timeout": 90, "statusMessage": "dart format + analyze" }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"$HOME/claude-agents/hooks/telegram-notify.sh\"", "async": true }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt",
+        "hooks": [
+          { "type": "command", "command": "\"$HOME/claude-agents/hooks/telegram-notify.sh\"", "async": true }
+        ]
+      }
+    ]
+  }
+}

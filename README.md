@@ -87,3 +87,26 @@ Claude also picks an agent on its own when a task matches its description.
 3. Open an MR that touches `lib/` or `test/`.
 
 Safety: read-only tools only (`Read`, `Grep`, `Glob`, `git diff/log/show`), no web tools, diff text treated as data, skipped for forks and for diffs over `CLAUDE_REVIEW_MAX_DIFF_LINES`, the comment is never posted if it contains a secret value, and the job never fails the pipeline. The job sends the diff and the files Claude reads to the model provider — check that this is allowed for your code.
+
+## Hooks
+
+Deterministic checks that run whatever agent is active — the backstop for the rules written in the agents' prompts.
+
+| Hook | Event | What it does |
+|---|---|---|
+| `hooks/guard-bash.sh` | `PreToolUse` (Bash, WebFetch) | **Denies** production hosts, force pushes, pushes to main/master/develop/release, `DROP`/`TRUNCATE`, Keychain reads, `rm -rf` of `/`, `~` or `..`. **Asks** before any other push, `git reset --hard`/`clean -f`/`branch -D`, and database writes |
+| `hooks/dart-format-analyze.sh` | `PostToolUse` (Edit, Write, MultiEdit) | Runs `dart format` on the edited `.dart` file (generated files skipped) and sends analyzer **errors** back to Claude so it fixes them immediately |
+| `hooks/telegram-notify.sh` | `SubagentStop`, `Notification` (async) | Short Telegram message when one of your agents finishes or Claude is waiting for your approval. Minimal by default — no code or findings leave your machine unless you set `TELEGRAM_NOTIFY_MODE=summary|full`; `mobile-security-auditor` is always minimal |
+
+Setup:
+1. `brew install jq`
+2. Merge `hooks/settings.example.json` into `~/.claude/settings.json` (keep your existing keys), then check with `/hooks` in Claude Code. Paths assume the repo is at `~/claude-agents`.
+3. Production hosts: one per line in `<project>/.claude/prod-hosts`, or comma-separated in `CLAUDE_PROD_HOSTS`. Without them the host check does nothing.
+4. FVM: `export CLAUDE_DART="fvm dart"`. To format without analyzing: `CLAUDE_HOOK_ANALYZE=0`.
+5. Telegram: create a bot with @BotFather, send it one message, get your chat id from `https://api.telegram.org/bot<token>/getUpdates`, then store both in the Keychain (not in env, where Claude's Bash tool could read them):
+   ```bash
+   security add-generic-password -s claude-telegram-bot  -a "$USER" -w '<bot token>'
+   security add-generic-password -s claude-telegram-chat -a "$USER" -w '<chat id>'
+   ```
+
+The hooks never fail the session: if `jq`, `dart` or the network is missing they do nothing. Hooks are a guard rail, not a sandbox — keep production credentials off the machine you run agents on. Turn all hooks off for one run with `claude --settings '{"disableAllHooks": true}'`.

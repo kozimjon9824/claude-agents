@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-23
+- Added `hooks/`: `guard-bash.sh` (deny/ask before production hosts, force or protected-branch pushes, destructive SQL, Keychain reads, wide deletes), `dart-format-analyze.sh` (format + analyzer errors back to Claude after each edit), `telegram-notify.sh` (minimal Telegram notifications from the Keychain-stored bot), and `settings.example.json`.
 - Added `ci/gitlab/`: advisory merge request review with `flutter-code-reviewer` in GitLab CI (headless `claude -p`, read-only tools, one updatable MR comment, secret-leak guard, fork and diff-size limits).
 
 ## 2026-11-20
