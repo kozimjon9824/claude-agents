@@ -74,3 +74,16 @@ Claude also picks an agent on its own when a task matches its description.
 - Claude Code
 - Flutter SDK on `PATH` (or resolvable from the project's `.dart_tool/package_config.json`)
 - Optional tools some agents use: an iOS Simulator (`simulator-qa-tester`, `figma-matcher`, `patrol-test-writer`), Patrol CLI (`patrol-test-writer`), a Figma MCP connection (`figma-matcher`), a Jira MCP connection (`jira-writer`)
+
+## Merge request review in GitLab CI
+
+`ci/gitlab/` runs `flutter-code-reviewer` headless (`claude -p`) on every merge request and posts one advisory comment, updated on each push.
+
+1. Copy `ci/gitlab/claude_review.sh` → `ci/claude_review.sh` and `ci/gitlab/claude-review.gitlab-ci.yml` → `ci/claude-review.gitlab-ci.yml` in your project; `include` it and add a `review` stage. Fill in `CLAUDE_CODE_VERSION` and `CLAUDE_AGENTS_REF` (or commit the agent to `.claude/agents/flutter-code-reviewer.md` — the script prefers the project's copy).
+2. CI/CD variables (Settings → CI/CD → Variables), **masked**:
+   - `ANTHROPIC_API_KEY` — a key with a spending limit; or, behind a company LLM gateway, `ANTHROPIC_BASE_URL` + `ANTHROPIC_AUTH_TOKEN`.
+   - `GITLAB_REVIEW_TOKEN` — a project access token, role Reporter, scope `api`, short expiry. Used only to post the comment; it is removed from Claude's environment before the review runs.
+   MR pipelines usually run on unprotected branches, so these can't be "protected" variables — keep both tokens low-privilege.
+3. Open an MR that touches `lib/` or `test/`.
+
+Safety: read-only tools only (`Read`, `Grep`, `Glob`, `git diff/log/show`), no web tools, diff text treated as data, skipped for forks and for diffs over `CLAUDE_REVIEW_MAX_DIFF_LINES`, the comment is never posted if it contains a secret value, and the job never fails the pipeline. The job sends the diff and the files Claude reads to the model provider — check that this is allowed for your code.

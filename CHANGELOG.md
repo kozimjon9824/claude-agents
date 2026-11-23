@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-23
+- Added `ci/gitlab/`: advisory merge request review with `flutter-code-reviewer` in GitLab CI (headless `claude -p`, read-only tools, one updatable MR comment, secret-leak guard, fork and diff-size limits).
+
 ## 2026-11-20
 - Safety: `figma-matcher`, `simulator-qa-tester` and `jira-writer` can no longer edit files (`disallowedTools`). Live API calls and database access are dev/staging only and read-only by default; data-changing steps need explicit confirmation.
 - `flutter-refactorer` hands bug and security fixes back to the main session instead of skipping them silently; `feature-pipeline` now owns those fixes, has a preflight step, guidance for the implementation step and at most two review rounds.

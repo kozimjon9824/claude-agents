@@ -1,0 +1,32 @@
+# AI code review on every merge request (advisory, never blocks the pipeline).
+# Add to your .gitlab-ci.yml:
+#   include:
+#     - local: ci/claude-review.gitlab-ci.yml
+#   stages: [..., review]
+# and copy claude_review.sh to ci/claude_review.sh in your project.
+
+claude_review:
+  stage: review
+  image: node:22-bookworm-slim          # use your internal registry mirror if Docker Hub is blocked
+  needs: []                              # start right away, in parallel with build/test
+  interruptible: true                    # a new push cancels the old review
+  allow_failure: true
+  timeout: 20m
+  variables:
+    GIT_DEPTH: "0"                       # the review needs the merge base
+    CLAUDE_CODE_VERSION: "<x.y.z>"       # pin it; upgrade on purpose
+    CLAUDE_AGENTS_REF: "<commit-sha>"    # claude-agents commit, used only if .claude/agents/flutter-code-reviewer.md is not in the project
+    CLAUDE_REVIEW_MAX_DIFF_LINES: "3000"
+    CLAUDE_REVIEW_MAX_TURNS: "30"
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq --no-install-recommends git jq curl ca-certificates >/dev/null
+    - npm install -g --silent "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}"
+  script:
+    - bash ci/claude_review.sh
+  rules:
+    # merge requests from this project only — never run with secrets for forks
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_PROJECT_ID == $CI_PROJECT_ID'
+      changes:
+        - lib/**/*
+        - test/**/*
+        - integration_test/**/*
